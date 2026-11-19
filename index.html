@@ -203,7 +203,7 @@
                 </h3>
                 
                 <div class="bg-slate-900/50 p-4 rounded-2xl text-sm leading-relaxed text-slate-300 min-h-[140px]">
-                    <p id="typewriter-text"></p>
+                    <div id="typewriter-text" class="space-y-3"></div>
                 </div>
             </div>
 
@@ -223,7 +223,13 @@
 
     <!-- Logic Script -->
     <script>
-        const pesanLengkap = "happy birthday cantikkkkk yang ke 21 yaa wsksk, jujur aku ngga tau si kamu bakal suka apa engga aku bikin kaya gini wsksk, semoga kamu suka yaa pyiss bilang iya gaa kalo bilang engga tak parani wsksk, semoga kamu di umur yang ke 21 ini kamu menjadi pribadi yg lebiii baik lagi ya dyraa karena hidup ituu tetap jalan dan gaboleee ngstuck hwhw, akuuu mau samaa kamu terus bebee, aku sayangggg bangettt sama kamuu bb❤️ kamuu haruss bahagia terus yaa bb gaboyeh sedi sediii, masa orang cantikk kaya kamuu sedi si hwhw, ya pokoknya kamuu harus bahagia trus ya cantikk❤️. buatt kamuuuu bebee semangat terus ya coolyeahnyaa, apalagi kamu dikit lagii mau kkn pasti sibukk bangettt, intinya semangat terus yaa untuk mencari ilmuuu, semoga kamuu segera cepat lulus yaa dan mendapatkan gelar S.S ituu yaakk. jujur aku seneng bangettt tauukkkk, akuuu bisaaa ngucapin kamu ulang tahun:( karena tahun kemarin akuu ga ngucapin kamu ulang tahun, semoga apa yang kamu inginkan bisa terwujud ya sayaanggg dan dimudahkan segala urusan, aamiin. sekarang kamu makin dewasa yang dimana kamu pasti taukk yang terbaik maupun yg gak buat diri kamu, harus lebih dewasa dari sebelumnya yaa, jangan perna cape buat perbaiki diri jadi lebi baik lagi, kmu semangat trus ya bb buat kejar semua keinginan kamu menjadi reporter yaa wksksk bial bisa kelja di jakarta dan nnti ketemu aku tar kitaa main ke dufan wsksk, kamu pasti bisa sayangg, jangan pernah takut untuk gagal ya, aku selalu support kamu sayang, maaf gabisa selalu ada disamping kamu, walaupun terhalang jarak, aku selalu berdoa agar kamu dalam lindungan Allah. semoga aku bisa nemenin kamu di ulang tahun yang akan datang ditahun berikutnya ya sayangg, aamin. satu hal yang harus kamu tau aku sayang banget sama kamuu, ily dyandra rasty aulia❤️";
+        const pesanParagraf = [
+            "happy birthday cantikkkkk yang ke 21 yaa wsksk, jujur aku ngga tau si kamu bakal suka apa engga aku bikin kaya gini wsksk, semoga kamu suka yaa pyiss bilang iya gaa kalo bilang engga tak parani wsksk.",
+            "semoga kamu di umur yang ke 21 ini kamu menjadi pribadi yg lebiii baik lagi ya dyraa karena hidup ituu tetap jalan dan gaboleee ngstuck hwhw, akuuu mau samaa kamu terus bebee, aku sayangggg bangettt sama kamuu bb❤️ kamuu haruss bahagia terus yaa bb gaboyeh sedi sediii, masa orang cantikk kaya kamuu sedi si hwhw, ya pokoknya kamuu harus bahagia trus ya cantikk❤️.",
+            "buatt kamuuuu bebee semangat terus ya coolyeahnyaa, apalagi kamu dikit lagii mau kkn pasti sibukk bangettt, intinya semangat terus yaa untuk mencari ilmuuu, semoga kamuu segera cepat lulus yaa dan mendapatkan gelar S.S ituu yaakk. jujur aku seneng bangettt tauukkkk, akuuu bisaaa ngucapin kamu ulang tahun:( karena tahun kemarin akuu ga ngucapin kamu ulang tahun, semoga apa yang kamu inginkan bisa terwujud ya sayaanggg dan dimudahkan segala urusan, aamiin.",
+            "sekarang kamu makin dewasa yang dimana kamu pasti taukk yang terbaik maupun yg gak buat diri kamu, harus lebih dewasa dari sebelumnya yaa, jangan perna cape buat perbaiki diri jadi lebi baik lagi, kmu semangat trus ya bb buat kejar semua keinginan kamu menjadi reporter yaa wksksk bial bisa kelja di jakarta dan nnti ketemu aku tar kitaa main ke dufan wsksk, kamu pasti bisa sayangg, jangan pernah takut untuk gagal ya, aku selalu support kamu sayang.",
+            "maaf gabisa selalu ada disamping kamu, walaupun terhalang jarak, aku selalu berdoa agar kamu dalam lindungan Allah. semoga aku bisa nemenin kamu di ulang tahun yang akan datang ditahun berikutnya ya sayangg, aamin. satu hal yang harus kamu tau aku sayang banget sama kamuu, ily dyandra rasty aulia❤️"
+        ];
 
         const alasanList = [
             "1. Ngobrol sama kamuuu tuhhh ngga pernah kerasa capek atau harus jaim, selalu nyambung aja ",
@@ -235,7 +241,9 @@
         ];
 
         let reasonIndex = 0;
-        let indexKetik = 0;
+        let indexParagraf = 0;
+        let indexHuruf = 0;
+        let currentP = null;
         let isPlaying = false;
         let candleBlown = false;
         const music = document.getElementById('bg-music');
@@ -275,10 +283,24 @@
         }
 
         function startTypewriter() {
-            if (indexKetik < pesanLengkap.length) {
-                document.getElementById("typewriter-text").innerHTML += pesanLengkap.charAt(indexKetik);
-                indexKetik++;
+            const container = document.getElementById("typewriter-text");
+            if (indexParagraf >= pesanParagraf.length) return;
+
+            if (!currentP) {
+                currentP = document.createElement("p");
+                container.appendChild(currentP);
+            }
+
+            const teksAktif = pesanParagraf[indexParagraf];
+            if (indexHuruf < teksAktif.length) {
+                currentP.textContent += teksAktif.charAt(indexHuruf);
+                indexHuruf++;
                 setTimeout(startTypewriter, 35);
+            } else {
+                indexParagraf++;
+                indexHuruf = 0;
+                currentP = null;
+                setTimeout(startTypewriter, 250);
             }
         }
 
